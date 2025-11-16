@@ -70,5 +70,12 @@ class Signal(BaseModel):
     strategy_name: str
     reason: str
     indicators: IndicatorSnapshot
+    outcome: Optional[Literal["WIN", "LOSS"]] = Field(default=None, description="Optional manual outcome")
 
-# Add your own schemas below as needed
+class FutureSignal(BaseModel):
+    symbol: str
+    interval: str
+    side: Side
+    reason: str
+    confidence: float = Field(..., ge=0, le=1)
+    eta_minutes: int = Field(..., ge=0, description="ETA in minutes from now")
